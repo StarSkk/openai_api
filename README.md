@@ -79,3 +79,5 @@ Request参数说明
 ```
 
 ## API封装示例
+python 示例
+参考[chatglm_api.py](https://github.com/StarSkk/openai_api/blob/main/chatglm_api.py)
