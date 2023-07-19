@@ -1,0 +1,14 @@
+debug: True
+port: 8000
+llm_type: chatglm
+llm_args:
+  temperature: 0.95
+  top_p: 0.7
+  max_tokens: 2048
+llm_models:
+  chatglm:
+    model_path: "THUDM/chatglm2-6b"
+  wizardlm:
+    model_path: "WizardLM/WizardLM-13B-V1.1"
+  azure:
+    api_base: ""
