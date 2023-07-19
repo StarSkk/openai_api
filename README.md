@@ -80,4 +80,7 @@ Request参数说明
 
 ## API封装示例
 python 示例
-参考[chatglm_api.py](https://github.com/StarSkk/openai_api/blob/main/chatglm_api.py)
+参考[llm_chatglm.py](https://github.com/StarSkk/openai_api/blob/main/llms/llm_chatglm.py)
+新增不同大模型需要实现的方法主要是chat和stream_chat:
+接收ChatCompletionRequest参数，返回大模型输出的字符串
+load_model: 初始化大模型
