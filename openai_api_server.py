@@ -22,7 +22,7 @@ from openai_api_protocol import (
 
 @app.post("/v1/chat/completions", response_model=ChatCompletionResponse)
 async def create_chat_completion(request: ChatCompletionRequest):
-    logger.debug(str(request.messages))
+    logger.debug(str(request.messages).encode())
     if request.messages[-1].role != "user" or request.model != LLM_MODEL.model_name:
         raise HTTPException(status_code=400, detail="Invalid request")
 
@@ -36,13 +36,13 @@ async def create_chat_completion(request: ChatCompletionRequest):
         message=ChatMessage(role="assistant", content=response),
         finish_reason="stop"
     )
-    logger.debug("response: {}".format(response))
+    logger.debug("response: {}".format(response.encode()))
 
     return ChatCompletionResponse(model=request.model, choices=[choice_data], object="chat.completion")
 
 
 async def predict(request: ChatCompletionRequest):
-    response = ""
+    response = "".encode()
     choice_data = ChatCompletionResponseStreamChoice(
         index=0,
         delta=DeltaMessage(role="assistant"),
@@ -58,7 +58,7 @@ async def predict(request: ChatCompletionRequest):
             continue
 
         new_text = new_response[current_length:]
-        response += new_text
+        response += new_text.encode()
         current_length = len(new_response)
 
         choice_data = ChatCompletionResponseStreamChoice(
