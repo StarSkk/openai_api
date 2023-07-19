@@ -7,7 +7,7 @@ python 示例
 ```
 import openai
 if __name__ == "__main__":
-    openai.api_base = "http://localhost:8000/v1"
+    openai.api_base = "http://localhost:8001/v1"
     openai.api_key = "none"
     for chunk in openai.ChatCompletion.create(
         model="chatglm2-6b",
@@ -34,7 +34,7 @@ if __name__ == "__main__":
         ],
         "stream": True,
     }
-    url = "http://localhost:8000/v1/chat/completions"
+    url = "http://localhost:8001/v1/chat/completions"
     response = requests.post(url, headers=header, data=json.dumps(data))
 
     for line in response.iter_lines():

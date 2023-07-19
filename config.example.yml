@@ -1,5 +1,5 @@
 debug: True
-port: 8000
+port: 8001
 llm_type: chatglm
 llm_args:
   temperature: 0.95

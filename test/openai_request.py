@@ -1,7 +1,7 @@
 import openai
 
 if __name__ == "__main__":
-    openai.api_base = "http://localhost:8000/v1"
+    openai.api_base = "http://localhost:8001/v1"
     openai.api_key = "none"
 
     model_name = "wizardlm"
