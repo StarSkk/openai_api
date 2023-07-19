@@ -30,12 +30,7 @@ async def create_chat_completion(request: ChatCompletionRequest):
         generate = predict(request)
         return EventSourceResponse(generate, media_type="text/event-stream")
 
-    response = LLM_MODEL.chat(
-        request.messages,
-        request.temperature,
-        request.top_p,
-        request.max_length
-    )
+    response = LLM_MODEL.chat(request)
     choice_data = ChatCompletionResponseChoice(
         index=0,
         message=ChatMessage(role="assistant", content=response),
@@ -54,7 +49,7 @@ async def predict(request: ChatCompletionRequest):
         finish_reason=None
     )
     chunk = ChatCompletionResponse(model=LLM_MODEL.model_name, choices=[choice_data], object="chat.completion.chunk")
-    yield "{}".format(chunk.json(exclude_unset=True))
+    yield "{}".format(chunk.model_dump_json(exclude_unset=True))
 
     current_length = 0
 
@@ -72,7 +67,7 @@ async def predict(request: ChatCompletionRequest):
             finish_reason=None
         )
         chunk = ChatCompletionResponse(model=LLM_MODEL.model_name, choices=[choice_data], object="chat.completion.chunk")
-        yield "{}".format(chunk.json(exclude_unset=True))
+        yield "{}".format(chunk.model_dump_json(exclude_unset=True))
     logger.debug("response: {}".format(response))
 
     choice_data = ChatCompletionResponseStreamChoice(
@@ -81,7 +76,7 @@ async def predict(request: ChatCompletionRequest):
         finish_reason="stop"
     )
     chunk = ChatCompletionResponse(model=LLM_MODEL.model_name, choices=[choice_data], object="chat.completion.chunk")
-    yield "{}".format(chunk.json(exclude_unset=True))
+    yield "{}".format(chunk.model_dump_json(exclude_unset=True))
     yield '[DONE]'
 
 
